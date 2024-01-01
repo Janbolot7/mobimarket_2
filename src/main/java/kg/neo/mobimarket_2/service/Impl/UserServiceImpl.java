@@ -13,6 +13,7 @@ import kg.neo.mobimarket_2.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -23,7 +24,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetails {
 
     @Autowired
     private UserRepository userRepository;
@@ -44,15 +45,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    public void updateFullDateOfUser(UserFullDto fullInfoUserDto) {
-        User user = new User();
-        user.setFirstName(fullInfoUserDto.getFirstName());
-        user.setLastName(fullInfoUserDto.getLastName());
-        user.setUsername(fullInfoUserDto.getUsername());
-        user.setEmail(fullInfoUserDto.getEmail());
-        user.setPhoneNumber(fullInfoUserDto.getPhoneNumber());
-        user.setBirthDate(fullInfoUserDto.getBirthDate());
-        userRepository.save(user);
+    public void updateFullDateOfUser(User user, UserFullDto fullInfoUserDto) {
+        if (user != null && fullInfoUserDto != null) {
+            user.setFirstName(fullInfoUserDto.getFirstName());
+            user.setLastName(fullInfoUserDto.getLastName());
+            user.setPhoneNumber(fullInfoUserDto.getPhoneNumber());
+            user.setBirthDate(fullInfoUserDto.getBirthDate());
+        } else {
+            throw new EntityNotFoundException("Такого пользователя не существует");
+        }
     }
 
     @Override
