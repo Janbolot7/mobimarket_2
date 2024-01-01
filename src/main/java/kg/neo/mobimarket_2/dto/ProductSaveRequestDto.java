@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductSaveRequestDto {
-    private MultipartFile image;
+    private byte[] image;
     private String productName;
     private String shortDescription;
     private String fullDescription;
