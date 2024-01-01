@@ -36,8 +36,8 @@ public class User implements UserDetails {
     private String phoneNumber;
     private LocalDate birthDate;
     @Lob
-    @Column(columnDefinition = "MEDIUMBLOB")
-    private String avatar;
+    @Column(columnDefinition = "bytea") // Изменили тип на bytea
+    private byte[] avatar;
 
     @Enumerated(EnumType.STRING)
     private Role role;
