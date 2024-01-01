@@ -52,8 +52,16 @@ public class ProductServiceImpl implements ProductService {
             System.out.println("Not a valid file");
         }
 
+//        try {
+//            product.setImage(Base64.getEncoder().encodeToString(requestDto.getImage().getBytes()));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
         try {
-            product.setImage(Base64.getEncoder().encodeToString(requestDto.getImage().getBytes()));
+            byte[] imageBytes = requestDto.getImage().getBytes();
+            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+            product.setImage(base64Image.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
