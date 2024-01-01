@@ -44,6 +44,17 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    public void updateFullDateOfUser(UserFullDto fullInfoUserDto) {
+        User user = new User();
+        user.setFirstName(fullInfoUserDto.getFirstName());
+        user.setLastName(fullInfoUserDto.getLastName());
+        user.setUsername(fullInfoUserDto.getUsername());
+        user.setEmail(fullInfoUserDto.getEmail());
+        user.setPhoneNumber(fullInfoUserDto.getPhoneNumber());
+        user.setBirthDate(fullInfoUserDto.getBirthDate());
+        userRepository.save(user);
+    }
+
     @Override
     public UserFullDto getSingleUser(int id) {
         Optional<User> user = userRepository.findById(id);

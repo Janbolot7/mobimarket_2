@@ -28,6 +28,11 @@ public class UserController {
     private final SmsService smsService;
     private final UserRepository userRepository;
 
+    @PostMapping("/fullInfoOfUser2")
+    public void addUser(@RequestBody UserFullDto fullInfoUserDto) {
+        userService.updateFullDateOfUser(fullInfoUserDto);
+    }
+
     @GetMapping("/findUsers")
     public List<User> findAllUsers() {
         return userService.getUser();

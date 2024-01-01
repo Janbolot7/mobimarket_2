@@ -28,4 +28,6 @@ public interface UserService {
     public User findByUsername(String username);
     List<Product> findAllUserProducts(User user);
     public boolean findByPhoneNumberAndVerified(String newPhoneNumber);
+    void updateFullDateOfUser(UserFullDto fullInfoUserDto);
+
 }
