@@ -35,9 +35,9 @@ public class User implements UserDetails {
     private Boolean verified = false;
     private String phoneNumber;
     private LocalDate birthDate;
-    @Lob
-    @Column(columnDefinition = "bytea") // Изменили тип на bytea
-    private byte[] avatar;
+//    @Lob
+//    @Column(columnDefinition = "bytea") // Изменили тип на bytea
+//    private byte[] avatar;
 
     @Enumerated(EnumType.STRING)
     private Role role;
