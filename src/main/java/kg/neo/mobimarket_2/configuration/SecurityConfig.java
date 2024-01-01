@@ -30,20 +30,20 @@ public class SecurityConfig {
                                 .antMatchers("/api/product/**")
                                 .hasAuthority("USER")
                                 .antMatchers("/api/registration/**",
-                                        "/swagger-ui/",
-                                        "/swagger-ui/**",
-                                        "/swagger-ui.html",
-                                        "/swagger-resources",
-                                        "/swagger-resources/*",
-                                        "/swagger-resources/**",
-                                        "/v2/api-docs",
-                                        "/v3/api-docs",
-                                        "/webjars/**").permitAll()
+//                                        "/swagger-ui/",
 //                                        "/swagger-ui/**",
 //                                        "/swagger-ui.html",
-//                                        "/swagger-ui/",
+//                                        "/swagger-resources",
+//                                        "/swagger-resources/*",
+//                                        "/swagger-resources/**",
+//                                        "/v2/api-docs",
 //                                        "/v3/api-docs",
-//                                        "/v3/api-docs/swagger-config").permitAll()
+//                                        "/webjars/**").permitAll()
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html",
+                                        "/swagger-ui/",
+                                        "/v3/api-docs",
+                                        "/v3/api-docs/swagger-config").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManagement ->
