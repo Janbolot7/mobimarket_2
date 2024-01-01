@@ -25,11 +25,12 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .antMatchers("/api/user/**")
+                                .antMatchers("/user/**")
                                 .hasAuthority("USER")
-                                .antMatchers("/api/product/**")
+                                .antMatchers("/product/**")
                                 .hasAuthority("USER")
-                                .antMatchers("/api/registration/**",
+                                .antMatchers("/registration/**",
+
                                         "/swagger-ui/",
                                         "/swagger-ui/**",
                                         "/swagger-ui.html",
