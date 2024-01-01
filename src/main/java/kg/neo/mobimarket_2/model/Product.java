@@ -26,8 +26,8 @@ public class Product {
     private int numberOfLikes;
 
     @Lob
-    @Column(columnDefinition = "MEDIUMBLOB")
-    private String image;
+    @Column(columnDefinition = "bytea")
+    private byte[] image;
 
     @ManyToOne
     @JoinColumn(
