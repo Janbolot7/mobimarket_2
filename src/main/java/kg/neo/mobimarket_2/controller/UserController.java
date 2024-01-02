@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 import static kg.neo.mobimarket_2.configuration.SwaggerConfig.USER;
@@ -28,9 +29,14 @@ public class UserController {
     private final SmsService smsService;
     private final UserRepository userRepository;
 
-    @PostMapping("/fullInfoOfUser2")
-    public void addUser(@RequestBody UserFullDto fullInfoUserDto) {
-        userService.updateFullDateOfUser(fullInfoUserDto);
+    @PostMapping("/fullInfoOfUser")
+    public ResponseEntity<String> addAllInfoUser(@PathVariable int userId, @RequestBody UserFullDto fullInfoUserDto) {
+        try {
+            userService.updateFullDateOfUser(userId, fullInfoUserDto);
+            return ResponseEntity.ok("User information updated successfully");
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        }
     }
 
     @GetMapping("/findUsers")

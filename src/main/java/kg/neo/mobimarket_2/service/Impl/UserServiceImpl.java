@@ -13,7 +13,6 @@ import kg.neo.mobimarket_2.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -24,7 +23,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetails {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -45,17 +44,21 @@ public class UserServiceImpl implements UserService, UserDetails {
         return userRepository.save(user);
     }
 
-    public void updateFullDateOfUser(User user, UserFullDto fullInfoUserDto) {
-        if (user != null && fullInfoUserDto != null) {
+    @Override
+    public void updateFullDateOfUser(int userId, UserFullDto fullInfoUserDto) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
             user.setFirstName(fullInfoUserDto.getFirstName());
             user.setLastName(fullInfoUserDto.getLastName());
             user.setPhoneNumber(fullInfoUserDto.getPhoneNumber());
             user.setBirthDate(fullInfoUserDto.getBirthDate());
+
+            userRepository.save(user);
         } else {
-            throw new EntityNotFoundException("Такого пользователя не существует");
+            throw new EntityNotFoundException("User not found with ID: " + userId);
         }
     }
-
     @Override
     public UserFullDto getSingleUser(int id) {
         Optional<User> user = userRepository.findById(id);
