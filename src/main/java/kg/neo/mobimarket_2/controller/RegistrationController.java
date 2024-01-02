@@ -30,9 +30,14 @@ public class RegistrationController {
         return ResponseEntity.ok(authService.username(request));
     }
 
-    @GetMapping("/credentialsCheck")
-    public ResponseEntity<CheckResponse> check(@RequestBody CheckRequest request){
-        return ResponseEntity.ok(authService.checkAvailability(request));
+    @PostMapping("/credentialsCheck")
+    public ResponseEntity<?> checkUserAvailability(@RequestBody CheckRequest request) {
+        return ResponseEntity.ok(authService.checkUserAvailability(request));
+//        return authService.checkUserAvailability(checkUserDto);
     }
+//    @GetMapping("/credentialsCheck")
+//    public ResponseEntity<CheckResponse> check(@RequestBody CheckRequest request){
+//        return ResponseEntity.ok(authService.checkAvailability(request));
+//    }
 
 }
