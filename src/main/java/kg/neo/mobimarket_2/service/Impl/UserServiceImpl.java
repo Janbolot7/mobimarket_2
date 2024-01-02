@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
             throw new EntityNotFoundException("User not found with ID: " + userId);
         }
     }
+
     @Override
     public UserFullDto getSingleUser(int id) {
         Optional<User> user = userRepository.findById(id);
