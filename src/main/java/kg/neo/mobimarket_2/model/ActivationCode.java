@@ -23,6 +23,8 @@ public class ActivationCode {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @Column(nullable = false)
+    private String email;
 
     public ActivationCode(User user) {
         this.code = UUID.randomUUID().toString();
