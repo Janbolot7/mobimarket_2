@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -188,13 +189,13 @@ public class UserServiceImpl implements UserService {
 //        return productRepository.findAllByUserId(user_id);
 //    }
     @Override
-    public List<Product> findAllUserProducts(User user) {
-        Integer userId = user.getUser_id(); // предположим, что это поле идентификатора пользователя в вашем классе User
-
-        // Найти все продукты для конкретного пользователя по его идентификатору
-        return productRepository.findAllByUserId(userId);
+    public List<Product> findAllUserProducts(Integer id) {
+        List<Product> products = productRepository.findAllByUserId(id);
+        if (products.isEmpty()) {
+            throw new EntityNotFoundException("Products not found for user with id: " + id);
+        }
+        return products;
     }
-
 
     @Override
     public boolean findByEmailAndVerified(String newEmail) {
