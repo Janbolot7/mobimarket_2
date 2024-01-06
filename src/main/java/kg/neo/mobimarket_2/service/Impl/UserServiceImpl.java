@@ -189,8 +189,10 @@ public class UserServiceImpl implements UserService {
 //    }
     @Override
     public List<Product> findAllUserProducts(User user) {
-        Integer user_id = user.getUser_id(); // Получение идентификатора пользователя
-        return productRepository.findAllByUserId(user_id);
+        Integer userId = user.getUser_id(); // предположим, что это поле идентификатора пользователя в вашем классе User
+
+        // Найти все продукты для конкретного пользователя по его идентификатору
+        return productRepository.findAllByUserId(userId);
     }
 
 
