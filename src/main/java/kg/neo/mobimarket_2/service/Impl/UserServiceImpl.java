@@ -183,10 +183,16 @@ public class UserServiceImpl implements UserService {
         return userOptional.isPresent();
     }
 
+//    @Override
+//    public List<Product> findAllUserProducts(User user_id) {
+//        return productRepository.findAllByUserId(user_id);
+//    }
     @Override
     public List<Product> findAllUserProducts(User user) {
-        return productRepository.findAllByUserId(user);
+        Integer userId = user.getUser_id(); // Получение идентификатора пользователя
+        return productRepository.findAllByUserId(userId);
     }
+
 
     @Override
     public boolean findByEmailAndVerified(String newEmail) {

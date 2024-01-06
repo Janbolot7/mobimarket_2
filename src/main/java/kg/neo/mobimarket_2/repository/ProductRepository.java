@@ -8,9 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-//    @Query("SELECT p FROM ProductDto p WHERE p.user.user_id = :userId")
-//    List<ProductDto> findAllByUserId(int userId);
-//@Query("SELECT p FROM ProductDto p WHERE p.user = :user")@Param("user")
-List<Product> findAllByUserId(User user);
+List<Product> findAllByUserId(Integer user_id);
 
 }
