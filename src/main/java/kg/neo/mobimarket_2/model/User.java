@@ -49,7 +49,7 @@ public class User implements UserDetails {
     private Set<Product> favoriteProducts = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<VerificationCode> verificationCodes;
+    private Set<ActivationCode> verificationCodes;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
