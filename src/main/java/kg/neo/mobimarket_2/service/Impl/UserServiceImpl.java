@@ -190,7 +190,7 @@ public class UserServiceImpl implements UserService {
 //    }
     @Override
     public List<Product> findAllUserProducts(Integer id) {
-        List<Product> products = productRepository.findAllByUser_userId(id);
+        List<Product> products = productRepository.findAllByUser_user_id(id);
         if (products.isEmpty()) {
             throw new EntityNotFoundException("Products not found for user with id: " + id);
         }
