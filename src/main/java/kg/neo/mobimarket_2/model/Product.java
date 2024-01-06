@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -25,10 +27,12 @@ public class Product {
     private String fullDescription;
     private int numberOfLikes;
 
-    @Lob
-    @Column(columnDefinition = "bytea")
-    private byte[] image;
+//    @Lob
+//    @Column(columnDefinition = "bytea")
+//    private byte[] image;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Image> images = new ArrayList<>();
     @ManyToOne
     @JoinColumn(
             name = "user_id",

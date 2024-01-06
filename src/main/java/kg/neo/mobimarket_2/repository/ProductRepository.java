@@ -11,5 +11,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 //    @Query("SELECT p FROM ProductDto p WHERE p.user.user_id = :userId")
 //    List<ProductDto> findAllByUserId(int userId);
 //@Query("SELECT p FROM ProductDto p WHERE p.user = :user")@Param("user")
-List<Product> findAllByUser(User user);
+List<Product> findAllByUserId(User user);
+
 }

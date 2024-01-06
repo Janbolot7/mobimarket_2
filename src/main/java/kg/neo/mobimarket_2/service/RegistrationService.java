@@ -26,7 +26,6 @@ public class RegistrationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final UserService userService;
 
 
     public AuthResponse register(RegisterRequest request) {

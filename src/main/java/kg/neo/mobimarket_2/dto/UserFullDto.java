@@ -17,4 +17,5 @@ public class UserFullDto {
     private String email;
     private String phoneNumber;
     private LocalDate birthDate;
+    private String avatar;
 }

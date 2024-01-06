@@ -1,7 +1,6 @@
 package kg.neo.mobimarket_2.controller;
 
 import io.swagger.annotations.Api;
-import kg.neo.mobimarket_2.dto.ProductListDto;
 import kg.neo.mobimarket_2.dto.UserFullDto;
 import kg.neo.mobimarket_2.model.User;
 import kg.neo.mobimarket_2.repository.UserRepository;
@@ -13,8 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.EntityNotFoundException;
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import static kg.neo.mobimarket_2.configuration.SwaggerConfig.USER;
@@ -29,13 +27,17 @@ public class UserController {
     private final SmsService smsService;
     private final UserRepository userRepository;
 
-    @PostMapping("/fullInfoOfUser")
-    public ResponseEntity<String> addAllInfoUser(@PathVariable int userId, @RequestBody UserFullDto fullInfoUserDto) {
+    @PutMapping("/fullInfoOfUser/{id}")
+    public ResponseEntity<User> addAllInfoUser(
+            @PathVariable("id") int userId,
+            @RequestBody UserFullDto userDto,
+            @RequestParam(value = "file", required = false) MultipartFile file
+    ) {
         try {
-            userService.updateFullDateOfUser(userId, fullInfoUserDto);
-            return ResponseEntity.ok("User information updated successfully");
-        } catch (EntityNotFoundException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+            ResponseEntity<User> response = userService.updateFullDateOfUser(userId, userDto, file);
+            return ResponseEntity.ok(response.getBody());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -44,11 +46,11 @@ public class UserController {
         return userService.getUser();
     }
 
-    @GetMapping("/findUser/{username}")
-    public ResponseEntity<UserFullDto> findUser(@PathVariable String login) {
-        UserFullDto userDto = userService.getSingleUserByUsername(login);
-        return ResponseEntity.ok(userDto);
-    }
+//    @GetMapping("/findUser/{username}")
+//    public ResponseEntity<UserFullDto> findUser(@PathVariable String login) {
+//        UserFullDto userDto = userService.getSingleUserByUsername(login);
+//        return ResponseEntity.ok(userDto);
+//    }
 
     @DeleteMapping("/deleteUser/{id}")
     public void deleteUser(@RequestParam int id) {
@@ -57,41 +59,41 @@ public class UserController {
 
 
 
-    @PutMapping("/updateUser/{username}")
-    public ResponseEntity<User> updateUser(
-            @PathVariable String username,
-            @RequestBody User updatedUser
-    ) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User authenticatedUser = userService.findByUsername(username);
+//    @PutMapping("/updateUser/{username}")
+//    public ResponseEntity<User> updateUser(
+//            @PathVariable String username,
+//            @RequestBody User updatedUser
+//    ) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        User authenticatedUser = userService.findByUsername(username);
+//
+//        if (authenticatedUser == null) {
+//            System.out.println("user not found");
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//        }
+//
+//        User updatedUserData = userService.updateUser(username, updatedUser);
+//
+//        if (updatedUserData == null) {
+//            System.out.println("There is no data");
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//        }
+//
+//        return ResponseEntity.ok(updatedUserData);
+//    }
 
-        if (authenticatedUser == null) {
-            System.out.println("user not found");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-
-        User updatedUserData = userService.updateUser(username, updatedUser);
-
-        if (updatedUserData == null) {
-            System.out.println("There is no data");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-
-        return ResponseEntity.ok(updatedUserData);
-    }
-
-    @GetMapping("/userProducts/{userId}")
-    public ResponseEntity<List<ProductListDto>> getUserProductListDtos(@PathVariable int userId) {
-        List<ProductListDto> userProductList = userService.getUserProductList(userId);
-        return ResponseEntity.ok(userProductList);
-    }
+//    @GetMapping("/userProducts/{userId}")
+//    public ResponseEntity<List<ProductListDto>> getUserProductListDtos(@PathVariable int userId) {
+//        List<ProductListDto> userProductList = userService.getUserProductList(userId);
+//        return ResponseEntity.ok(userProductList);
+//    }
 
 
-    @GetMapping("/favorite-products/{userId}")
-    public ResponseEntity<List<ProductListDto>> getFavoriteProductList(@PathVariable int userId) {
-        List<ProductListDto> favoriteProductList = userService.getFavoriteProductList(userId);
-        return ResponseEntity.ok(favoriteProductList);
-    }
+//    @GetMapping("/favorite-products/{userId}")
+//    public ResponseEntity<List<ProductListDto>> getFavoriteProductList(@PathVariable int userId) {
+//        List<ProductListDto> favoriteProductList = userService.getFavoriteProductList(userId);
+//        return ResponseEntity.ok(favoriteProductList);
+//    }
 
     @PutMapping("/{userId}/favorite-products/{productId}")
     public ResponseEntity<User> addOrRemoveFavoriteProduct(
@@ -107,35 +109,33 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
-    @PutMapping("/update-phone-number/{userId}")
-    public ResponseEntity<String> updatePhoneNumber(
+    @PutMapping("/update-email/{userId}")
+    public ResponseEntity<String> updateEmail(
             @PathVariable int userId,
-            @RequestParam String newPhoneNumber
+            @RequestParam String newEmail
     ) {
-        return userService.updatePhoneNumber(userId, newPhoneNumber);
+        return userService.updateEmail(userId, newEmail);
     }
-
-
-
 
     @PostMapping("/send-verification-code")
-    public ResponseEntity<String> sendVerificationCode(@RequestParam String phoneNumber) {
-        smsService.sendVerificationCode(phoneNumber);
-        return ResponseEntity.ok("Verification code sent successfully.");
+    public ResponseEntity<String> sendVerificationCode(@RequestParam String email, @RequestParam String verificationCode) {
+        String activationCode = "Copy your code and enter to confirm " + verificationCode;
+        try {
+            smsService.sendEmail(email, activationCode);
+            return ResponseEntity.ok("Activation email sent successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send activation email");
+        }
     }
 
-
-    @PostMapping("/verify-phone-number")
-    public ResponseEntity<String> verifyPhoneNumber(
-            @RequestParam String phoneNumber,
-            @RequestParam String code
-    ) {
-        boolean isVerified = userService.verifyPhoneNumber(phoneNumber, code);
+    @PostMapping("/verifyEmail")
+    public ResponseEntity<String> verifyEmail(@RequestParam String email, @RequestParam String code) {
+        boolean isVerified = userService.verifyEmail(email, code);
 
         if (isVerified) {
-            return ResponseEntity.ok("Phone number verified successfully.");
+            return ResponseEntity.ok("Email verified successfully");
         } else {
-            return ResponseEntity.badRequest().body("Phone number verification failed.");
+            return ResponseEntity.badRequest().body("Failed to verify email");
         }
     }
 

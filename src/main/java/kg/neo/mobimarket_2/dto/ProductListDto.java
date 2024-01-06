@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductListDto {
     private int product_id;
-    private byte[] image;
+    private String image;
     private String productName;
     private int price;
     private int numberOfLikes;
