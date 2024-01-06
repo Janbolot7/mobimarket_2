@@ -189,8 +189,8 @@ public class UserServiceImpl implements UserService {
 //    }
     @Override
     public List<Product> findAllUserProducts(User user) {
-        Integer userId = user.getUser_id(); // Получение идентификатора пользователя
-        return productRepository.findAllByUserId(userId);
+        Integer user_id = user.getUser_id(); // Получение идентификатора пользователя
+        return productRepository.findAllByUserId(user_id);
     }
 
 
