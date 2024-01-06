@@ -113,15 +113,16 @@ public class UserController {
 
         return ResponseEntity.ok(updatedUser);
     }
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Product>> getAllProductsByUserId(@PathVariable("userId") Integer userId) {
-        try {
-            List<Product> products = userService.getAllByUserId(userId);
-            return new ResponseEntity<>(products, HttpStatus.OK);
-        } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+    /////////9348098098094389084840398
+//    @GetMapping("/user/{userId}")
+//    public ResponseEntity<List<Product>> getAllProductsByUserId(@PathVariable("userId") Integer userId) {
+//        try {
+//            List<Product> products = userService.getAllByUserId(userId);
+//            return new ResponseEntity<>(products, HttpStatus.OK);
+//        } catch (EntityNotFoundException e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 
     @PutMapping("/update-email/{userId}")
     public ResponseEntity<String> updateEmail(
