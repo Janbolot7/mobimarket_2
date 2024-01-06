@@ -184,13 +184,13 @@ public class UserServiceImpl implements UserService {
         return userOptional.isPresent();
     }
 
-//    @Override
+    //    @Override
 //    public List<Product> findAllUserProducts(User user_id) {
 //        return productRepository.findAllByUserId(user_id);
 //    }
     @Override
-    public List<Product> findAllUserProducts(Integer id) {
-        List<Product> products = productRepository.findAllByUser_user_id(id);
+    public List<Product> getAllByUserId(Integer id) {
+        List<Product> products = productRepository.getAllByUserId(id);
         if (products.isEmpty()) {
             throw new EntityNotFoundException("Products not found for user with id: " + id);
         }

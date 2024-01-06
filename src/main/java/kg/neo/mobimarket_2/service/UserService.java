@@ -22,7 +22,7 @@ public interface UserService {
     public boolean doesUserExistByEmail(String email);
     public boolean doesUserExistByUsername(String username);
     public User findByUsername(String username);
-    List<Product> findAllUserProducts(Integer id);
+    List<Product> getAllByUserId(Integer id);
     public boolean findByEmailAndVerified(String newEmail);
     public ResponseEntity<User> updateFullDateOfUser(int id, UserFullDto user, MultipartFile file);
 }
