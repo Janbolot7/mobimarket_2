@@ -6,6 +6,7 @@ import kg.neo.mobimarket_2.dto.ProductListDto;
 import kg.neo.mobimarket_2.dto.ProductSaveRequestDto;
 import kg.neo.mobimarket_2.exceptions.VerificationException;
 import kg.neo.mobimarket_2.model.Product;
+import kg.neo.mobimarket_2.repository.ProductRepository;
 import kg.neo.mobimarket_2.service.Impl.ProductServiceImpl;
 import kg.neo.mobimarket_2.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ import static kg.neo.mobimarket_2.configuration.SwaggerConfig.PRODUCT;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
-//    private final ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
 
     //    @PostMapping("/saveProduct")
