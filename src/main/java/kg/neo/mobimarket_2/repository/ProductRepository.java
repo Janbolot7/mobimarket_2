@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-List<Product> findAllByUserId(Integer user_id);
+    List<Product> findAllByUser_userId(Integer userId);
 
 }
