@@ -4,7 +4,6 @@ import kg.neo.mobimarket_2.dto.UserFullDto;
 import kg.neo.mobimarket_2.model.ActivationCode;
 import kg.neo.mobimarket_2.model.Product;
 import kg.neo.mobimarket_2.model.User;
-import kg.neo.mobimarket_2.repository.ProductRepository;
 import kg.neo.mobimarket_2.repository.UserRepository;
 import kg.neo.mobimarket_2.repository.VerificationCodeRepository;
 import kg.neo.mobimarket_2.service.CloudinaryService;
@@ -28,8 +27,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private ProductService productService;
-    @Autowired
-    private ProductRepository productRepository;
+//    @Autowired
+//    private ProductRepository productRepository;
     @Autowired
     private VerificationCodeRepository verificationCodeRepository;
     @Autowired
