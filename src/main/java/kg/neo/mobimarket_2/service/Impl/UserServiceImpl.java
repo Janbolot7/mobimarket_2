@@ -189,14 +189,10 @@ public class UserServiceImpl implements UserService {
 //        return productRepository.findAllByUserId(user_id);
 //    }
     /////////////////////78347848473487784378738478
-//    @Override
-//    public List<Product> getAllByUserId(Integer id) {
-//        List<Product> products = productRepository.getAllByUserId(id);
-//        if (products.isEmpty()) {
-//            throw new EntityNotFoundException("Products not found for user with id: " + id);
-//        }
-//        return products;
-//    }
+    @Override
+    public List<Product> findAllUserProducts(User user) {
+        return productRepository.findAllByUser(user);
+    }
 
     @Override
     public boolean findByEmailAndVerified(String newEmail) {

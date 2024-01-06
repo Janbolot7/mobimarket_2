@@ -23,7 +23,7 @@ public interface UserService {
     public boolean doesUserExistByUsername(String username);
     public User findByUsername(String username);
     /////0948904380982908902390893
-//    List<Product> getAllByUserId(Integer id);
+    List<Product> findAllUserProducts(User user);
     public boolean findByEmailAndVerified(String newEmail);
     public ResponseEntity<User> updateFullDateOfUser(int id, UserFullDto user, MultipartFile file);
 }
