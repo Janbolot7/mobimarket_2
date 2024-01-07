@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     private VerificationCodeRepository verificationCodeRepository;
     private CloudinaryService cloudinaryService;
 
-    @Value(value = "${GMAIL}")
+    @Value(value = "${gmail}")
     private String gmail;
 
     private final JavaMailSender javaMailSender;
