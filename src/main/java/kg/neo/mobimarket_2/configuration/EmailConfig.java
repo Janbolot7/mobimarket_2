@@ -12,7 +12,7 @@ import java.util.Properties;
 public class EmailConfig {
     @Value("${gmail}")
     private String mail;
-    @Value("${gmail-app-code}")
+    @Value("${spring.mail.password}")
     private String code;
 
     @Bean
