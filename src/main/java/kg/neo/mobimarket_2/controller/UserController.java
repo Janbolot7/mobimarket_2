@@ -141,11 +141,11 @@ public class UserController {
     public ResponseEntity<String> verifyEmail(@RequestParam String email, @RequestParam String code) {
         boolean isVerified = userService.verifyEmail(email, code);
 
-        if (isVerified) {
-            return ResponseEntity.ok("Email verified successfully");
-        } else {
-            return ResponseEntity.badRequest().body("Failed to verify email");
-        }
+//        if (isVerified) {
+//            return ResponseEntity.ok("Email verified successfully");
+//        } else {
+//            return ResponseEntity.badRequest().body("Failed to verify email");
+//        }
     }
 
 }
