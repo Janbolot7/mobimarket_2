@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import kg.neo.mobimarket_2.dto.UserFullDto;
 import kg.neo.mobimarket_2.model.User;
 import kg.neo.mobimarket_2.repository.UserRepository;
+import kg.neo.mobimarket_2.request.RegisterRequest;
 import kg.neo.mobimarket_2.service.UserService;
 import kg.neo.mobimarket_2.sms.SmsService;
 import lombok.RequiredArgsConstructor;
@@ -126,15 +127,20 @@ public class UserController {
         return userService.updateEmail(userId, newEmail);
     }
 
-    @PostMapping("/send-verification-code")
-    public ResponseEntity<String> sendVerificationCode(@RequestParam("email") String email) {
-        String activationCode = "Copy your code and enter to confirm " + smsService.generateVerificationCode();
-        try {
-            smsService.sendEmail(email, activationCode);
-            return ResponseEntity.ok("Activation email sent successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send activation email");
-        }
+//    @PostMapping("/send-verification-code")
+//    public ResponseEntity<String> sendVerificationCode(@RequestParam("email") String email) {
+//        String activationCode = "Copy your code and enter to confirm " + smsService.generateVerificationCode();
+//        try {
+//            smsService.sendEmail(email, activationCode);
+//            return ResponseEntity.ok("Activation email sent successfully");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send activation email");
+//        }
+//    }
+    @PostMapping("/sendEmailCode")
+    public String senSmsCode (@RequestBody RegisterRequest registerRequest, Integer code){
+        userService.sendTokenToEmail(registerRequest, code);
+        return("Sms was Send To Email");
     }
 
     @PostMapping("/verifyEmail")

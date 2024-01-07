@@ -36,6 +36,7 @@ public class User implements UserDetails {
     private String phoneNumber;
     private LocalDate birthDate;
     private String avatar;
+    private Integer code;
 
     @Enumerated(EnumType.STRING)
     private Role role;

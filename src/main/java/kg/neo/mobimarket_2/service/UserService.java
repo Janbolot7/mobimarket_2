@@ -6,6 +6,7 @@ import kg.neo.mobimarket_2.dto.ProductListDto;
 import kg.neo.mobimarket_2.dto.UserFullDto;
 import kg.neo.mobimarket_2.model.Product;
 import kg.neo.mobimarket_2.model.User;
+import kg.neo.mobimarket_2.request.RegisterRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +27,7 @@ public interface UserService {
     List<Product> findAllUserProducts(User user);
     public boolean findByEmailAndVerified(String newEmail);
     public ResponseEntity<User> updateFullDateOfUser(int id, UserFullDto user, MultipartFile file);
+    public String sendTokenToEmail(RegisterRequest registerRequest, Integer code);
 }
 //    public List<ProductListDto> getUserProductList(int userId);
 //    public List<ProductListDto> getFavoriteProductList(int userId);

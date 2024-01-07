@@ -1,18 +1,25 @@
 package kg.neo.mobimarket_2.service.Impl;
 
 import kg.neo.mobimarket_2.dto.UserFullDto;
+import kg.neo.mobimarket_2.exceptions.RecordNotFoundException;
 import kg.neo.mobimarket_2.model.ActivationCode;
 import kg.neo.mobimarket_2.model.Product;
 import kg.neo.mobimarket_2.model.User;
 import kg.neo.mobimarket_2.repository.ProductRepository;
 import kg.neo.mobimarket_2.repository.UserRepository;
 import kg.neo.mobimarket_2.repository.VerificationCodeRepository;
+import kg.neo.mobimarket_2.request.RegisterRequest;
 import kg.neo.mobimarket_2.service.CloudinaryService;
 import kg.neo.mobimarket_2.service.ProductService;
 import kg.neo.mobimarket_2.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,20 +27,23 @@ import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.UUID;
 
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private ProductService productService;
-    @Autowired
     private ProductRepository productRepository;
-    @Autowired
     private VerificationCodeRepository verificationCodeRepository;
-    @Autowired
     private CloudinaryService cloudinaryService;
+
+    @Value(value = "${GMAIL}")
+    private String gmail;
+
+    private final JavaMailSender javaMailSender;
 
     @Override
     public List<User> getUser() {
@@ -200,6 +210,26 @@ public class UserServiceImpl implements UserService {
 
         return userOptional.map(User::getVerified).orElse(false);
     }
+
+    public void sendEmail(Integer code, String mail) {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        Random random = new Random();
+        code = random.nextInt(9000) + 1000;
+        simpleMailMessage.setFrom(gmail);
+        simpleMailMessage.setTo(mail);
+        simpleMailMessage.setText("Ваш код был отправлен" + code);
+        javaMailSender.send(simpleMailMessage);
+    }
+    public String sendTokenToEmail(RegisterRequest registerRequest, Integer code) {
+
+        User user = userRepository.findByUsername(registerRequest.getUsername())
+                .orElseThrow(() -> new RecordNotFoundException("Такой пользователь не существует!"));
+        sendEmail(code, user.getEmail());
+        user.setCode(code);
+        userRepository.save(user);
+        return "Письмо успешно отправлено на почту: " + user.getEmail();
+    }
+
 }
 
 
