@@ -270,7 +270,6 @@ public class UserServiceImpl implements UserService {
 //                    userEntity.getEmail(),
 //                    userEntity.getPhoneNumber(),
 //                    userEntity.getBirthDate(),
-//                    userEntity.getAvatar()
 //            );
 //        }
 //        throw new RuntimeException("User is not find " + id);
@@ -289,7 +288,6 @@ public class UserServiceImpl implements UserService {
 //                    userEntity.getEmail(),
 //                    userEntity.getPhoneNumber(),
 //                    userEntity.getBirthDate(),
-//                    userEntity.getAvatar();
 //            );
 //        }
 //        throw new RuntimeException("User is not find " + username);
