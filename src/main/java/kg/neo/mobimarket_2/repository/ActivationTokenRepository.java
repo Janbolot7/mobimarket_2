@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
-public interface ActivationTokenRepository extends JpaRepository<ActivationCode, Long> {
-    Optional<ActivationCode> findByToken(String Token);
-}
+//@Repository
+//public interface ActivationTokenRepository extends JpaRepository<ActivationCode, Long> {
+//    Optional<ActivationCode> findByToken(String Token);
+//}
