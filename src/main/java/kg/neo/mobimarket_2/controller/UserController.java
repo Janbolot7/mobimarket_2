@@ -1,23 +1,17 @@
 package kg.neo.mobimarket_2.controller;
 
 import io.swagger.annotations.Api;
-import kg.neo.mobimarket_2.dto.ProductFullDto;
 import kg.neo.mobimarket_2.dto.UserFullDto;
-import kg.neo.mobimarket_2.model.Product;
 import kg.neo.mobimarket_2.model.User;
 import kg.neo.mobimarket_2.repository.UserRepository;
 import kg.neo.mobimarket_2.service.UserService;
-import kg.neo.mobimarket_2.sms.smsSender.SmsService;
+import kg.neo.mobimarket_2.sms.SmsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.Collections;
 import java.util.List;
 
 import static kg.neo.mobimarket_2.configuration.SwaggerConfig.USER;

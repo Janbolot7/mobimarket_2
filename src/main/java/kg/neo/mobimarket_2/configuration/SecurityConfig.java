@@ -31,6 +31,8 @@ public class SecurityConfig {
                                 .hasAuthority("USER")
                                 .antMatchers("/registration/**",
 
+                                        "/user/send-verification-code",
+
                                         "/swagger-ui/",
                                         "/swagger-ui/**",
                                         "/swagger-ui.html",

@@ -1,4 +1,4 @@
-package kg.neo.mobimarket_2.sms.smsSender;
+package kg.neo.mobimarket_2.sms;
 
 
 import kg.neo.mobimarket_2.model.ActivationCode;
@@ -23,7 +23,7 @@ public class SmsService {
         this.javaMailSender = javaMailSender;
         this.activationCode = activationCode;
     }
-
+//
 //    public void sendVerificationCode(String phoneNumber) {
 //        String verificationCode = generateVerificationCode();
 //        LocalDateTime currentTime = LocalDateTime.now();
@@ -50,7 +50,6 @@ public class SmsService {
         int code = random.nextInt(9000) + 1000; // Generates a random 4-digit code
         return String.valueOf(code);
     }
-
     public void sendActivationEmail(String email) {
         String activationCode = "Copy your code and enter to confirm" + generateVerificationCode();
         sendEmail(email, activationCode);
