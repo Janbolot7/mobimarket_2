@@ -6,7 +6,6 @@ import kg.neo.mobimarket_2.model.User;
 import kg.neo.mobimarket_2.repository.UserRepository;
 import kg.neo.mobimarket_2.request.RegisterRequest;
 import kg.neo.mobimarket_2.service.UserService;
-import kg.neo.mobimarket_2.sms.SmsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +23,7 @@ import static kg.neo.mobimarket_2.configuration.SwaggerConfig.USER;
 public class UserController {
 
     private final UserService userService;
-    private final SmsService smsService;
+//    private final SmsService smsService;
     private final UserRepository userRepository;
 
     @PutMapping("/fullInfoOfUser/{id}")
