@@ -45,13 +45,13 @@ public class SmsService {
 //        smsSender.sendSms(smsRequest);
 //    }
 
-    private String generateVerificationCode() {
+    public String generateVerificationCode() {
         Random random = new Random();
         int code = random.nextInt(9000) + 1000; // Generates a random 4-digit code
         return String.valueOf(code);
     }
 
-    public void sendActivationEmail(String email, String generateVerificationCode) {
+    public void sendActivationEmail(String email) {
         String activationCode = "Copy your code and enter to confirm" + generateVerificationCode();
         sendEmail(email, activationCode);
     }

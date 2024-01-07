@@ -133,8 +133,8 @@ public class UserController {
     }
 
     @PostMapping("/send-verification-code")
-    public ResponseEntity<String> sendVerificationCode(@RequestParam String email, @RequestParam String verificationCode) {
-        String activationCode = "Copy your code and enter to confirm " + verificationCode;
+    public ResponseEntity<String> sendVerificationCode(@RequestParam("email") String email) {
+        String activationCode = "Copy your code and enter to confirm " + smsService.generateVerificationCode();
         try {
             smsService.sendEmail(email, activationCode);
             return ResponseEntity.ok("Activation email sent successfully");
