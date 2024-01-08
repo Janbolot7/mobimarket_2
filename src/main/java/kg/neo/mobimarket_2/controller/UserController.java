@@ -33,12 +33,11 @@ public class UserController {
 
     @PutMapping("/fullInfoOfUser/{id}")
     public ResponseEntity<User> addAllInfoUser(
-            @PathVariable("id") int userId,
             @RequestBody UserFullDto userDto,
             @RequestParam(value = "file", required = false) MultipartFile file
     ) {
         try {
-            ResponseEntity<User> response = userService.updateFullDateOfUser(userId, userDto, file);
+            ResponseEntity<User> response = userService.updateFullDateOfUser(userDto, file);
             return ResponseEntity.ok(response.getBody());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

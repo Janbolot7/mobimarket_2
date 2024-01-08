@@ -56,17 +56,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<User> updateFullDateOfUser(int id, UserFullDto user, MultipartFile file) {
+    public ResponseEntity<User> updateFullDateOfUser(UserFullDto user, MultipartFile file) {
         User userInDB;
         try {
-            userInDB = userRepository.findById(id).orElseThrow(()
-                    -> new IllegalStateException("User with id " + id + " not found!"));
+            userInDB = userRepository.findById(user.getUser_id()).orElseThrow(()
+                    -> new IllegalStateException("User with id " + user.getUser_id() + " not found!"));
 
-            userInDB.setUsername(user.getUsername());
             userInDB.setFirstName(user.getFirstName());
             userInDB.setLastName(user.getLastName());
-            userInDB.setEmail(user.getEmail());
             userInDB.setPhoneNumber(user.getPhoneNumber());
+            userInDB.setBirthDate(user.getBirthDate());
 
             if (file != null && !file.isEmpty()) {
                 String profileImageUrl = cloudinaryService.uploadImage(file);
