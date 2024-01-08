@@ -13,8 +13,6 @@ public class UserFullDto {
     private int user_id;
     private String firstName;
     private String lastName;
-    private String username;
-    private String email;
     private String phoneNumber;
     private LocalDate birthDate;
     private String avatar;
