@@ -1,9 +1,6 @@
 package kg.neo.mobimarket_2.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -15,6 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "activation_token")
 public class ActivationCode {
     @Id

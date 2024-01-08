@@ -2,8 +2,10 @@ package kg.neo.mobimarket_2.controller;
 
 import io.swagger.annotations.Api;
 import kg.neo.mobimarket_2.dto.UserFullDto;
+import kg.neo.mobimarket_2.model.ActivationCode;
 import kg.neo.mobimarket_2.model.User;
 import kg.neo.mobimarket_2.repository.UserRepository;
+import kg.neo.mobimarket_2.repository.VerificationCodeRepository;
 import kg.neo.mobimarket_2.request.RegisterRequest;
 import kg.neo.mobimarket_2.service.UserService;
 import kg.neo.mobimarket_2.sms.SmsService;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 import static kg.neo.mobimarket_2.configuration.SwaggerConfig.USER;
 
@@ -26,6 +29,7 @@ public class UserController {
     private final UserService userService;
     private final SmsService smsService;
     private final UserRepository userRepository;
+    private final VerificationCodeRepository verificationCodeRepository;
 
     @PutMapping("/fullInfoOfUser/{id}")
     public ResponseEntity<User> addAllInfoUser(
@@ -142,9 +146,24 @@ public class UserController {
 //        return("Sms was Send To Email");
 //    }
     @PostMapping("/sendActivationEmail")
-    public void sendActivationEmail(@RequestBody String email) {
-        String activationCode = "Copy your code and enter to confirm" + smsService.generateVerificationCode();
+    public ResponseEntity<?> sendActivationEmail(@RequestBody String email) {
+        String generateCode = smsService.generateVerificationCode();
+
+        String activationCode = "Copy your code and enter to confirm" + generateCode;
+
         smsService.sendEmail(email, activationCode);
+
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            ActivationCode activationCode1 = new ActivationCode();
+            activationCode1.setCode(generateCode);
+            activationCode1.setEmail(email);
+            activationCode1.setUser(user.get());
+            verificationCodeRepository.save(activationCode1);
+        } else {
+            return ResponseEntity.badRequest().body("USER NOT FOUND!");
+        }
+        return ResponseEntity.ok("Message was successfully");
     }
 
     @PostMapping("/verifyEmail")

@@ -151,12 +151,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean verifyEmail(String email, String code) {
-//        User user = userRepository.findByEmail(email);
-//
-//        if (user == null) {
-//            System.out.println("user is null");
-//            return false;
-//        }
         Optional<User> userOptional = userRepository.findByEmail(email);
 
         if (userOptional.isPresent()) {
