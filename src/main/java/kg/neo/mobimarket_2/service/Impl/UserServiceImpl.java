@@ -34,11 +34,11 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private ProductService productService;
-    private ProductRepository productRepository;
-    private VerificationCodeRepository verificationCodeRepository;
-    private CloudinaryService cloudinaryService;
+    private final UserRepository userRepository;
+    private final ProductService productService;
+    private final ProductRepository productRepository;
+    private final VerificationCodeRepository verificationCodeRepository;
+    private final CloudinaryService cloudinaryService;
 
 //    @Value(value = "${gmail}")
 //    private String gmail;
