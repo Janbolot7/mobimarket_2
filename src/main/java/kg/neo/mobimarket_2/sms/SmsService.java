@@ -55,11 +55,11 @@ public class SmsService {
         sendEmail(email, activationCode);
     }
 
-    public void sendEmail(String toEmail, String activationLink) {
+    public void sendEmail(String toEmail, String activationCode) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setSubject("Активируйте свой аккаунт");
-        message.setText("Для активации Вашего аккаунта, пройдите по ссылке: \n\n" + activationLink);
+        message.setText("Для активации Вашего аккаунта, пройдите по ссылке: \n\n" + activationCode);
         javaMailSender.send(message);
     }
 }
