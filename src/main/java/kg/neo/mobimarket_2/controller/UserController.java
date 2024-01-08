@@ -6,6 +6,7 @@ import kg.neo.mobimarket_2.model.User;
 import kg.neo.mobimarket_2.repository.UserRepository;
 import kg.neo.mobimarket_2.request.RegisterRequest;
 import kg.neo.mobimarket_2.service.UserService;
+import kg.neo.mobimarket_2.sms.SmsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ import static kg.neo.mobimarket_2.configuration.SwaggerConfig.USER;
 public class UserController {
 
     private final UserService userService;
-//    private final SmsService smsService;
+    private final SmsService smsService;
     private final UserRepository userRepository;
 
     @PutMapping("/fullInfoOfUser/{id}")
@@ -55,7 +56,6 @@ public class UserController {
     public void deleteUser(@RequestParam int id) {
         userService.deleteUser(id);
     }
-
 
 
 //    @PutMapping("/updateUser/{username}")
@@ -126,7 +126,7 @@ public class UserController {
         return userService.updateEmail(userId, newEmail);
     }
 
-//    @PostMapping("/send-verification-code")
+    //    @PostMapping("/send-verification-code")
 //    public ResponseEntity<String> sendVerificationCode(@RequestParam("email") String email) {
 //        String activationCode = "Copy your code and enter to confirm " + smsService.generateVerificationCode();
 //        try {
@@ -136,10 +136,15 @@ public class UserController {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send activation email");
 //        }
 //    }
-    @PostMapping("/sendEmailCode")
-    public String senSmsCode (@RequestBody RegisterRequest registerRequest, Integer code){
-        userService.sendTokenToEmail(registerRequest, code);
-        return("Sms was Send To Email");
+//    @PostMapping("/sendEmailCode")
+//    public String senSmsCode (@RequestBody RegisterRequest registerRequest, Integer code){
+//        userService.sendTokenToEmail(registerRequest, code);
+//        return("Sms was Send To Email");
+//    }
+    @PostMapping("/sendActivationEmail")
+    public void sendActivationEmail(@RequestBody String email) {
+        String activationCode = "Copy your code and enter to confirm" + smsService.generateVerificationCode();
+        smsService.sendEmail(email, activationCode);
     }
 
     @PostMapping("/verifyEmail")

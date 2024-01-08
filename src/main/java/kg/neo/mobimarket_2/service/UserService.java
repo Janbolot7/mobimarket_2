@@ -27,7 +27,7 @@ public interface UserService {
     List<Product> findAllUserProducts(User user);
     public boolean findByEmailAndVerified(String newEmail);
     public ResponseEntity<User> updateFullDateOfUser(int id, UserFullDto user, MultipartFile file);
-    public String sendTokenToEmail(RegisterRequest registerRequest, Integer code);
+//    public String sendTokenToEmail(RegisterRequest registerRequest, Integer code);
 }
 //    public List<ProductListDto> getUserProductList(int userId);
 //    public List<ProductListDto> getFavoriteProductList(int userId);

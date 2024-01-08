@@ -211,24 +211,25 @@ public class UserServiceImpl implements UserService {
         return userOptional.map(User::getVerified).orElse(false);
     }
 
-    public void sendEmail(Integer code, String mail) {
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        Random random = new Random();
-        code = random.nextInt(9000) + 1000;
-        simpleMailMessage.setFrom(gmail);
-        simpleMailMessage.setTo(mail);
-        simpleMailMessage.setText("Ваш код был отправлен" + code);
-        javaMailSender.send(simpleMailMessage);
-    }
-    public String sendTokenToEmail(RegisterRequest registerRequest, Integer code) {
-
-        User user = userRepository.findByUsername(registerRequest.getUsername())
-                .orElseThrow(() -> new RecordNotFoundException("Такой пользователь не существует!"));
-        sendEmail(code, user.getEmail());
-        user.setCode(code);
-        userRepository.save(user);
-        return "Письмо успешно отправлено на почту: " + user.getEmail();
-    }
+//    public void sendEmail(String mail, Integer code) {
+////        Integer code;
+//        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+//        Random random = new Random();
+//        code = random.nextInt(9000) + 1000;
+//        simpleMailMessage.setFrom(gmail);
+//        simpleMailMessage.setTo(mail);
+//        simpleMailMessage.setText("Ваш код был отправлен" + code);
+//        javaMailSender.send(simpleMailMessage);
+//    }
+//    public String sendTokenToEmail(RegisterRequest registerRequest, Integer code) {
+//
+//        User user = userRepository.findByUsername(registerRequest.getUsername())
+//                .orElseThrow(() -> new RecordNotFoundException("Такой пользователь не существует!"));
+//        sendEmail(code, user.getEmail());
+//        user.setCode(code);
+//        userRepository.save(user);
+//        return "Письмо успешно отправлено на почту: " + user.getEmail();
+//    }
 
 }
 
