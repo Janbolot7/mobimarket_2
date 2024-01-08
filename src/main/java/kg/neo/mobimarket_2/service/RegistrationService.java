@@ -72,6 +72,7 @@ public class RegistrationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthResponse.builder()
                 .token(jwtToken)
+                .userId(user.getUser_id())
                 .build();
     }
 
