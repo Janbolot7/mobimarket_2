@@ -33,6 +33,8 @@ public class SecurityConfig {
 
                                         "/user/send-verification-code",
 
+                                        "/product/saveProduct",
+
                                         "/swagger-ui/",
                                         "/swagger-ui/**",
                                         "/swagger-ui.html",

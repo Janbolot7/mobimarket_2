@@ -59,6 +59,7 @@ public class RegistrationService {
 
         return AuthResponse.builder()
                 .message("now you registered")
+                .userId(user.getUser_id())
                 .build();
     }
 
